@@ -39,13 +39,15 @@ $.canvasTimer = function( arg ){
   ctx.fillStyle = "white";
   ctx.fillRect(0, 0, x, y);
 
-  
+  var rotateOpts = ['X','Y','Z'];
+  var rotateStyle = 0;
   var pixelCount = -1;
   !function pixelDown(){
     if(pixelCount++ > x*y/36){
         pixelCount = -1;
         ctx.fillStyle = "white";
         ctx.fillRect(0, 0, x, y);
+        rotateStyle++;
     }
     var dx = (pixelCount % x);
     var dy = parseInt(pixelCount/x,10)*40;
@@ -58,6 +60,7 @@ $.canvasTimer = function( arg ){
             canvas.fadeOut();
             return;            
         }
+        canvas.css('transform','rotate'+rotateOpts[rotateStyle%3]+'('+pixelCount%360+'deg');
         ctx.fillStyle = "#"+cr+cg+cb;
         ctx.fillRect(dx, dy, 10, 50); 
         pixelDown();
@@ -67,4 +70,4 @@ $.canvasTimer = function( arg ){
 
 var condition = false;
 $.canvasTimer(function(){ return condition; });
-setTimeout(function(){ condition = true; },10000);
+setTimeout(function(){ condition = true; },15000);
